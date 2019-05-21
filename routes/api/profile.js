@@ -29,7 +29,10 @@ router.post(
   '/',
   [
     auth,
-    [check('status', 'Status is required').not().isEmpty(), check('skills', 'Skills is required').not().isEmpty()]
+    [
+      check('status', 'Status is required').not().isEmpty(),
+      check('skills', 'Skills is required').not().isEmpty()
+    ]
   ],
   async (req, res) => {
     const errors = validationResult(req)
@@ -76,7 +79,11 @@ router.post(
       let profile = await Profile.findOne({user: req.user.id})
       if (profile) {
         // Update
-        profile = await Profile.findOneAndUpdate({user: req.user.id}, {$set: profileFields}, {new: true})
+        profile = await Profile.findOneAndUpdate(
+          {user: req.user.id},
+          {$set: profileFields},
+          {new: true}
+        )
         return res.json(profile)
       }
       // Create
@@ -89,5 +96,19 @@ router.post(
     }
   }
 )
+
+// @route  GET api/profile
+// @desc   Get all profiles
+// @access Public
+
+router.get('/', async (req, res) => {
+  try {
+    const profiles = await Profile.find().populate('user', ['name', 'avatar'])
+    res.json(profiles)
+  } catch (err) {
+    console.error(err.message)
+    res.status(500).send('Server Error')
+  }
+})
 
 module.exports = router
