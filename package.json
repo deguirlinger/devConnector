@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Social network for developers",
   "main": "server.js",
+  "engines": {
+    "node": "12.1.0"
+  },
   "scripts": {
     "start": "node server",
     "server": "nodemon server",
@@ -27,7 +30,7 @@
     "express-validator": "^5.3.1",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.5.11",
+    "mongoose": "^5.5.13",
     "request": "^2.88.0"
   },
   "devDependencies": {
